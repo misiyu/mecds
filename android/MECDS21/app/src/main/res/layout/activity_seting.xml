@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/setting_item1"
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+        <ImageView
+            android:id="@+id/seting_image1"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="8dp"
+            android:src="@drawable/setting_image1_red"
+             />
+        <TextView
+            android:id="@+id/seting_textview1.1"
+            android:layout_toRightOf="@+id/seting_image1"
+            android:layout_toLeftOf="@+id/seting_switch1"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:textSize="28sp"
+            android:textColor="#181817"
+            android:text="自动防御" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginLeft="15dp"
+            android:layout_toLeftOf="@+id/seting_switch1"
+            android:layout_toRightOf="@+id/seting_image1"
+            android:layout_alignParentBottom="true"
+            android:text="打开将自动根据推荐方式防御"/>
+
+        <view.FunSwitch
+            android:id="@+id/seting_switch1"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_width="70dp"
+            android:layout_height="40dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/setting_item2"
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+        <ImageView
+            android:id="@+id/seting_image2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/setting_image2"
+            />
+        <TextView
+            android:id="@+id/seting_textview2.1"
+            android:layout_toRightOf="@+id/seting_image2"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:textSize="28sp"
+            android:textColor="#181817"
+            android:text="iptables管理" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/seting_image2"
+            android:layout_alignParentBottom="true"
+            android:text="iptables规则查看与管理"/>
+
+
+
+        <view.SubmitButton
+            android:id="@+id/seting_button1"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:text="清空"
+            android:textSize="10sp"
+            android:textColor="@color/gray"
+            app:sub_btn_background="@color/white"
+            app:sub_btn_tick_color="@color/yellow"
+            app:sub_btn_duration="1000"
+            app:sub_btn_line_color="@color/colorPrimary"
+            app:sub_btn_ripple_color="@color/colorPrimary"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="0dp"
+            />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+        <ImageView
+            android:id="@+id/seting_image3"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/setting_image3"
+            />
+        <TextView
+            android:id="@+id/seting_textview3.1"
+            android:layout_toRightOf="@+id/seting_image3"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:textSize="28sp"
+            android:textColor="#181817"
+            android:text="清空缓存" />
+        <TextView
+            android:id="@+id/setting_textview3.2"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/seting_image3"
+            android:layout_alignParentBottom="true"
+            android:text=""/>
+
+
+
+        <view.SubmitButton
+            android:id="@+id/seting_button2"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:text="清空"
+            android:textSize="10sp"
+            android:textColor="@color/gray"
+            app:sub_btn_background="@color/white"
+            app:sub_btn_tick_color="@color/yellow"
+            app:sub_btn_duration="1000"
+            app:sub_btn_line_color="@color/colorPrimary"
+            app:sub_btn_ripple_color="@color/colorPrimary"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="0dp"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/setting_item4"
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+        <ImageView
+            android:id="@+id/seting_image4"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="8dp"
+            android:src="@drawable/setting_image4"
+            />
+        <TextView
+            android:id="@+id/seting_textview4.1"
+            android:layout_toRightOf="@+id/seting_image4"
+            android:layout_toLeftOf="@+id/seting_switch4"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:textSize="28sp"
+            android:textColor="#181817"
+            android:text="LAN-MEC模式" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginLeft="15dp"
+            android:layout_toLeftOf="@+id/seting_switch4"
+            android:layout_toRightOf="@+id/seting_image4"
+            android:layout_alignParentBottom="true"
+            android:text="打开将用局域网内MEC防御策略"/>
+
+        <view.FunSwitch
+            android:id="@+id/seting_switch4"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_width="70dp"
+            android:layout_height="40dp" />
+    </RelativeLayout>
+
+</LinearLayout>

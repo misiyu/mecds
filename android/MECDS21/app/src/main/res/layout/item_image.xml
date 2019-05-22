@@ -1,0 +1,47 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="55dp"
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp" >
+
+    <ImageView
+        android:id="@+id/iv_item"
+        android:layout_width="75dp"
+        android:layout_height="55dp"
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerCrop"
+        android:layout_marginLeft="5dp"
+        android:src="@drawable/ring_red" />
+    <TextView
+        android:id="@+id/IPtextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@id/iv_item"
+        android:text="192.168.60.1"
+        android:textColor="@color/black"
+        android:textSize="26sp"
+        />
+
+    <TextView
+        android:id="@+id/degreeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/reddot"
+        android:contentDescription="@string/app_name"
+        android:gravity="center"
+        android:text="1"
+        android:textColor="#ffffff" />
+    <TextView
+        android:id="@+id/item_textview_time"
+        android:layout_width="wrap_content"
+        android:layout_height="15dp"
+        android:text="time"
+        android:layout_toRightOf="@+id/iv_item"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"/>
+
+</RelativeLayout>

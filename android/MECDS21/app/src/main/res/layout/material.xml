@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/activity_background"
+        android:gravity="center_horizontal">
+
+        <view.SubmitButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="OK"
+            android:textSize="10sp"
+            android:textColor="@color/gray"
+            app:sub_btn_background="@color/white"
+            app:sub_btn_tick_color="@color/yellow"
+            app:sub_btn_duration="1000"
+            app:sub_btn_line_color="@color/colorPrimary"
+            app:sub_btn_ripple_color="@color/colorPrimary"
+            />
+
+        <view.SubmitButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Submit"
+            android:textColor="@color/gray"
+            android:textSize="12sp"
+            app:sub_btn_background="@color/white"
+            app:sub_btn_duration="2000"
+            app:sub_btn_line_color="@color/colorPrimary"
+            app:sub_btn_ripple_color="@color/colorPrimary"
+            app:sub_btn_tick_color="@color/white" />
+
+        <view.SubmitButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:sub_btn_tick_color="@color/white"
+            android:text="Submit"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            app:sub_btn_duration="3000" />
+
+        <view.SubmitButton
+            android:id="@+id/btn3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Submit"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:sub_btn_duration="4000" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/activity_background">
+
+        <android.support.design.widget.TextInputLayout
+            android:textColorHint="#c5c5c5"
+            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:id="@+id/master_ip_textInputLayout">
+            <EditText
+                android:textSize="30sp"
+                android:hint="master ip"
+                android:textColor="#2fa881"
+                android:textAlignment="center"
+                android:id="@+id/master_ip_editText"
+                android:layout_width="300dp"
+                android:layout_marginLeft="35dp"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:background="@drawable/login_selector_bg_edit"
+                android:textCursorDrawable="@drawable/login_bg_input_cursor"
+                android:paddingBottom="2dp"
+                />
+        </android.support.design.widget.TextInputLayout>
+
+        <view.SubmitButton
+            android:id="@+id/master_ip_submit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/master_ip_textInputLayout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:text="Submit"
+            android:textColor="@color/gray"
+            android:textSize="12sp"
+            app:sub_btn_background="@color/white"
+            app:sub_btn_duration="2000"
+            app:sub_btn_line_color="@color/colorPrimary"
+            app:sub_btn_ripple_color="@color/colorPrimary"
+            app:sub_btn_tick_color="@color/white" />
+
+        <ListView
+            android:id="@+id/master_ip_history"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:layout_below="@+id/master_ip_submit"
+            >
+
+        </ListView>
+
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/getmasterip_hand"
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+        <ImageView
+            android:id="@+id/getmasterip_image1"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="8dp"
+            android:src="@drawable/getmasterip_image1"
+            />
+        <TextView
+            android:id="@+id/getmasterip_textview1.1"
+            android:layout_toRightOf="@+id/getmasterip_image1"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:textSize="28sp"
+            android:textColor="#181817"
+            android:text="手动配置" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/getmasterip_image1"
+            android:layout_alignParentBottom="true"
+            android:text="手动输入已知MEC服务器ip"/>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/getmasterip_location"
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+        <ImageView
+            android:id="@+id/getmasterip_image2"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="8dp"
+            android:src="@drawable/getmasterip_image2"
+            />
+        <TextView
+            android:id="@+id/getmasterip_textview2.1"
+            android:layout_toRightOf="@+id/getmasterip_image2"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:textSize="28sp"
+            android:textColor="#181817"
+            android:text="定位搜索" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/getmasterip_image2"
+            android:layout_alignParentBottom="true"
+            android:text="根据手机定位从远端服务器获取最近MEC服务器的ip"/>
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

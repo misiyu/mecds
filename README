@@ -1,0 +1,312 @@
+
+
+
+程序说明
+
+	MECDS防御系统主要分为四大部分
+1、 Spark并行计算程序
+2、 中心服务器端Http服务器
+3、 MEC端Http服务器
+4、 Android应用软件
+目    录
+1	系统整体测试环境	1
+1.1	运行环境	1
+1.2	运行方法	2
+2	Spark并行计算程序	3
+2.1	运行环境	3
+2.2	并行计算程序说明	4
+2.3	运行方法	4
+3	远程中心服务器Http服务器	6
+3.1	运行环境	6
+3.2	内部结构	6
+3.3	运行方式	6
+4	MEC端HTTP服务器	7
+4.1	运行环境	7
+4.2	内部结构	7
+4.3	运行方式	8
+5	Android应用软件	9
+5.1	运行环境	9
+5.2	内部结构	9
+5.2.1	adapter包	9
+5.2.2	com.example.misiyu.mecds21	10
+5.2.3	test包	15
+5.2.4	util包	15
+5.2.5	View包	16
+5.2.6	web包	16
+5.3	运行方式	17
+
+
+第5章 系统整体测试环境
+本小节主要介绍作者在部署系统时搭建的测试环境的整体框架，以及整个系统的部署方法。每部分的详细说明请读者查阅后面的章节。以下每一章都详细说明了每个单独部分的运行环境搭建、运行方法以及程序内部结构（针对每个文件都进行详细说明）。
+1.1 运行环境
+作者测试使用设备
+1、 腾讯云主机一台，ubuntu16.04操作系统，  ip 为140.143.8.104。
+2、 笔记本电脑一台，作为MEC服务器，安装了ubuntu16.04操作系统，安装了vmware，并在vmware上创建了两台ubuntu16.04虚拟机，与物理机一起组成集群。
+3、 华为荣耀6，H60-L01型号，Android6.0 手机一部，已root。
+运行环境架构图如图1.1所示。
+
+图 系统整体测试环境.1 系统整体部署环境
+1.2 运行方法
+
+1、 搭建好集群、中心服务器，修改android程序中的中心服务器地址，安装android程序。
+2、 手动启动并行计算集群，并提交并行计算程序到集群上运行。即集群与并行计算程序都需要手动启动，作者并未完成Android终端远程请求启动集群的功能。
+3、 打开Android应用，设置MEC IP，连接上笔记本电脑。
+4、 打开检测开关。
+5、 使用攻击主机攻击手机。
+6、 等待一会，Android应用出现警告信息，如图1.2所示则表示运行成功。
+
+     图 系统整体测试环境.2 运行成功图
+1.3 注意事项总结
+这里将总结以下部署系统时的注意事项，便于读者查找部署问题，这些注意事项在后文中的相应部分还会提到。
+1、 由于Android应用与流量分析程序文件序号未实现同步功能，所以每次重新打开Android软件检测启动开关，就需要重新提交并行计算程序运行。
+2、 MEC服务器必须是linux系统。
+3、 Hadoop用户与apache执行用户要一致，且该用户还需要有root权限。
+4、 注意http服务器程序中的目录，需要给PHP程序提供读写权限。
+第6章 Spark并行计算程序
+1.4 运行环境
+程序需要运行在Spark-hadoop集群上，所以需要部署集群运行环境。理论上，只要正确部署了Spark并行计算集群和Hadoop的HDFS分布式文件系统并通过简单测试能正确运行，则并行计算程序也能正确运行。
+现在给出系统测试时的集群运行环境。
+物理设备：电脑一台，8G内存安装Ubuntu 16.04系统（直接安装在物理机上，不能安装在虚拟机上）
+安装好的Ubuntu16.04还需要软件环境：
+Vmware 虚拟机
+Java运行环境：jdk8.0
+Scala运行环境：scala2.11.12
+spark-2.3.0-bin-hadoop2.7
+（注：软件版本并不一定都要一一对上，尽量使用最新版本即可）
+需要三台主机组成集群。如图1.1所示。就是在一台ubuntu16.04的物理主机上安装了vmware，然后vmware创建两台虚拟机，物理机ubuntu16.04使用的是桌面版本（即有图形界面），而两台虚拟机使用的是ubuntu server版本（即没有图形界面），这是为了节省运行虚拟机的所需要的内存。
+
+图2.1 集群设备图
+测试时，作者所有的物理机有8GBit内存，给两台虚拟机分配的内存都是1.3G。需要注意的是，由于Spark配置中单个主机提供给集群使用的内存大小为1G，所以给虚拟机分配的内存应大于1G。
+三台主机关于Spark的配置见文件夹 ./mecds/cluster/spark ，Master和Slave的配置略有不同，所以分别给出。
+三台主机关于Hadoop的配置见文件夹 ./mecds/cluster/hadoop。Hadoop在三台主机上的配置完全相同。
+1.5 并行计算程序说明
+本程序使用idea编写，程序整体比较简单。
+程序入口为Main.scala 。其中IPAnalyze.scala和Test.scala是用于测试的，删去不影响整个程序运行。AnalyzeThread.scala与CheckIsStopThead.scala是两个线程。
+AnalyzeThread.scala主要功能是：不断从HDFS分布式文件系统中读出文件，分析，然后输出结果。如表1.1所示。
+表2.1 并行计算类方法表
+名称
+作用
+input
+从HDFS中循环读出文件，一开始运行时会不断检查HDFS中有无cap0文件，如果有，则读出，并再次被调用时会检查有无cap1文件，依此类推。所以手机传过来的文件需要按cap0、cap1、cap2… 这种方式命名。由于未实现序号同步功能，所以，手机每次重启流量检测时，并行计算程序也得重启。
+analyze
+进行流量分析
+output
+将结果输出，每分析完一个文件，输出一次，而且输出到同一目录中，所以会覆盖前面的输出。但由于分析程序一直保留着计算结果，所以即使覆盖前面的输出，但计算结果不受影响。
+CheckIsStopThead.scala的功能是不断检查HDFS中是否有/signal/stopAnalyze这个文件，如果有，则改变AnalyzeThread.scala的循环变量，以达到停止AnalyzeThread线程的目标。
+1.6 运行方法
+1、 启动spark集群，启动HDFS分布式文件系统
+2、 利用idea将工程进行打包
+3、 使用命令将程序包上传至集群就能运行。
+若读者部署的Spark集群中master的IP与作者一样，同样是192.168.60.1 ，则可以直接使用作者打包好的程序，该程序包路径为 ./mecds/cluster/suspectIP/out/ artifacts/ipAnalyze/ipAnalyze.jar 。并且在程序包所在文件夹中，还有一个用于提交运行的脚本start.sh，和停止程序的脚本stop.sh。读者只要在linux命令行中进入该文件夹，然后运行start.sh脚本就能启动并行计算程序，运行stop.sh就能终止并行计算程序。若master ip 不同，则读者需要自行修改并行计算程序中的master ip后再打包，打包使用idea的普通打包方式即可，无需要使用maven之类的框架打包。
+第7章 远程中心服务器Http服务器
+该服务器的功能是为手机提供周围的MEC服务器列表。
+1.7 运行环境
+服务器需要具有固定ip ，作者在测试是使用的是一台腾讯台主机，具有固定公网IP为140.143.8.104 ，固定得写在Android程序中。
+服务器操作系统不作特别限制，但需要PHP及Apache环境。
+作者测试环境：
+操作系统：ubuntu16.04
+服务器应用：
+PHP7.0
+Apache2
+1.8 内部结构
+服务器程序与MEC服务器混在一起放置在 ./mecds/http/android这个文件夹下。属于中心服务器的文件只有getMasterIp.php和mecServerTable.txt这两个。其中getMasterIp.php为服务器程序，mecServerTable.txt是保存经纬度与MEC IP对应关系的文件。
+1.9 运行方式
+将./mecds/http/android/ 这个文件夹放到Apache运行目录下即可。同时可以删除除了getMasterIp.php和mecServerTable.txt这两个文件之外的所有文件。
+若读者同样使用ubuntu16.04操作系统。Apache的运行目录为/var/www/http/ 。
+第8章 MEC端HTTP服务器
+1.10 运行环境
+MEC端HTTP服务器必须部署在以上Spark集群的Master结点主机上。必须是一台安装linux系统的主机。
+注意：该服务器程序会调用linux shell命令对hadoop的HDFS分布式文件系统进行数据上传和下载。而对HDFS的操作只要部署Hadoop的用户才能进行，所以需要修改Apache的执行用户。修改执行用户一是为了能执行Hadoop操作，二是为了能让PHP程序使用Root的一些权限，所以应改为一个有root权限的用户。在linux系统下，修改Apache执行用户只需修改文件/etc/apache2/envvars 中的
+#export APACHE_RUN_USER=www-data
+#export APACHE_RUN_GROUP=www-data
+export APACHE_RUN_USER=misiyu
+export APACHE_RUN_GROUP=misiyu
+如上所示，原本Apache执行用户为www-data，而被作者修改为misiyu，与部署Hadoop时使用的用户一致，而且misiyu这个用户能执行sudo操作。
+	运行该服务器需要的软件环境有:
+	PHP7.0
+	Apache2
+	Tcpdump 安装网络抓包程序
+	Arpspoof  安装ARP欺骗程序
+
+1.11 内部结构
+下面将讲述所有目录和文件的作用。如表4.1所示。
+
+
+表4.1 MEC服务器程序文件及其功能
+名称
+作用
+data
+文件夹，用于缓存手机发来的文件以及从HDFS下载的分析结果分析。
+程序运行时，注意将该目录的读写权限赋给Apache执行用户。
+signal
+保存一些终止信号文件以及tcpdump的过滤规则文件/signal/mydumpFilter
+arp_spoof.php
+接收手机请求后，启动该目录下的arp_spoof.sh脚本
+arp_spoof.sh
+使用arpspoof进行ARP欺骗，并启动当前目录下的./mydump.sh脚本
+clear_output.sh
+清空缓存，包括data目录以及HDFS文件系统
+dspark.sh
+将目录./data下的所有cap文件上传至HDFS,为防止过多进程同时访问HDFS，该脚本使用./data/hasoneDspark文件作为进程互斥信号
+file_upload.php
+接收手机传过来的文件，保存到./data文件夹中，并启动./dspark脚本
+get_arpspoof_result.php
+名字有点奇怪，应该改为get_result.php。这是接收手机获取分析结果请求的文件，接收到手机获取分析结果请求分，会启动get_HDFS_res.sh脚本，将分析结果从HDFS取回./data文件夹，再将结果回传给手机。
+get_HDFS_res.sh
+从HDFS取出分析结果文件夹保存到./data目录下，再将文件夹内的所有结果文件合并到./data/result文件中
+kill_arpspoof.sh
+杀死arpspoof进程和mydump.sh进程，以终止ARP欺骗和网络抓包
+mydump.sh
+使用tcpdump进行网络抓包，并提取数据包关键信息，保存在文件中
+stop_arpspoof.php
+接收手机终止ARP欺骗请求，并执行kill_arpspoof.sh脚本
+
+1.12 运行方式
+配置好环境后，将./mecds/http/android/ 这个文件夹放到Apache运行目录下即可。同时可以删除getMasterIp.php和mecServerTable.txt这两个文件。
+若读者同样使用ubuntu16.04操作系统。Apache的运行目录为/var/www/http/ 。
+第9章 Android应用软件
+1.13 运行环境
+Android设备，需要root权限。
+作者测试时使用的是Android6.0。华为荣耀6，型号为H60-L01
+1.14 内部结构
+Android应用分为两部分，一个是使用Android Studio开发的Android程序，一个是用于手机抓包的tcpdump程序以及其启动脚本。
+脚本程序见 ./mecds/android/androidshell，里面有三个文件，需要将这三个文件移动到Android系统中的 /root/ 目录下，并都赋予执行权限才能运行。
+三个文件及其中作用如表5.1所示。
+表5.1 android终端shell脚本表
+名称
+作用
+mydump.sh
+通用模式下，启动tcpdump抓包程序的脚本
+mydump2.sh
+LAN-MEC模式下启动tcpdump抓包工具的脚本
+tcpdump
+Tcpdump抓包程序，能在android6.0上使用，其它没测试过
+Android程序比较大，也比较复杂。正文将分包进行介绍。作者使用Android Studio打开程序看到的包列表如图5.1所示。
+
+图5.1 Java程序包
+1.14.1 adapter包
+包中有两个Adapter。其中MainListAdapter.java是主页面ListView的Adapter，如图5.2。而SearchListAdapter.java则是定位搜索页面用于显示MEC IP表的Adapter，如图5.3。
+
+图5.2 主页面图
+
+图5.3 定位搜索页面图
+1.14.2 com.example.misiyu.mecds21
+这个包中包含了Android程序的所有页面
+（1） DetailActivity.java
+该界面为查看警告信息详细内容页面，如图5.4所示。
+
+图5.4 警告详细信息报告界面
+
+（2） GetMasterIpActivity.java
+这个是手动输入IP和定位搜索MEC服务器选择页面，如图5.5所示。
+
+图5.5 搜索服务器选项界面
+（3） IptablesActivity
+查看iptables规则的界面，如图5.6所示
+
+图5.6 iptables规则页面
+（4） LoginActivity
+这个页面在系统中并未使用到。原本想来设置一个用户登录页面，如图5.7所示。在主页面中右滑，然后点击“一键防御”就可以进入该界面
+
+图5.7 登录页面
+
+（5） MainActivity
+主界面，用以显示警告信息，如图5.2以及图5.8所示。在图5.8中，左上角的开关为整个系统的开关。打开开关，系统会默认使用上次使用的MEC IP作为检测所用的MEC服务器地址。需要注意的是，服务器是否存在，是否能连接上，在打开开关启动时是不作任何提示的。
+
+图5.8主页面视图二
+
+（6） SearchActivity
+定位搜索MEC IP页面。刚进入定位搜索页面时应该会如图5.9所示
+
+图5.9 定位搜索页面一
+如果运行时能正确显示出定位信息，则再点击“搜索周边MEC”就会变成页面图5.10所示。当然，图5.10为正确运行时的图，如果正确部署在中心服务器并且相应修改Android程序中的中心服务器地址才能显示。
+这里需要注意的是，该类中封装了使用百度地址API获得经纬度的方法，要使用百度地图API，就需要在百度官方网站上申请一个认证码。这个码作者已经申请好了，并配置到了Android应用中，如果读者在运行时，定位一直不成功，则可能是认证码失效了，需要重新申请。
+
+图5.10 定位搜索页面二
+（7） SetingActivity
+设置页面，页面中，只有LAN-MEC模式开关有用，该开关用于模式切换。其它并无大用。自动防御开关，作者本意是打开后，系统产生警告时，无关用户再查看警告并点击按键，而是自动修改防御规则，但这里只是图形界面完成了，并无后台逻辑支持。
+
+图5.11 系统设置页面
+
+（8） SetIPActivity
+手动设置Master IP。这一页面在开发时会常用到。
+
+图5.12 手动设置MEC IP
+1.14.3 test包
+作者在开发过程中用于单独测试某些类时使用，读者不必在意。
+1.14.4 util包
+（1） Common.java
+该类在整个程序中，保存着所有共享变量。表5.2将对该类中的所有变量及方法加以说明。
+表5.2 Common类属性及方法说明
+名称
+作用
+MasterIp
+与手机通信的MEC服务器IP
+PackageDir
+Android程序的工作目录
+PackageBasicName
+抓包程序产生文件的名称前面的英文字母，统一为”cap”
+tcpdumpFilterRule
+抓包程序过滤规则
+localIp
+手机IP地址
+localDefenceMode
+LAN-MEC模式是否打开标记
+verifyStoragePermissions
+动态获取权限，在Android6.0以上系统中，有些权限需要动态获取
+refreshMainList
+更新主页面图形界面（图5.2），产生警告信息
+showSearchResultDialog
+更新定位搜索页面（图5.10），产生MEC IP表
+
+（2） FileIO.java
+读者可以忽略该类，似乎在整个程序中都未用到。
+（3） MainListItemType
+主页面（图5.2）中的警告信息ListView，ListView中的每个元素的属性都保存在一个类中。该ListView的Adapter，即MainListAdapter，中就保存着一个类列表，每个类对应产生一个警告信息，系统的警告信息有针对端口的和针对源IP地址的两种，而这区别由MainListItemType这个枚举类型类来区分。
+（4） MyBDLocation
+作者作者百度地图API时用来做测试的类。在本系统中不起作用，读者可忽略。真正为系统提供定位的功能已经封装在SearchActivity类中，读者可自行查看。
+（5） Mydump
+无用，可忽略。
+（6） RefreshMainListThread
+用于刷新主页面而产生警告信息的线程类。
+（7） Util
+读者若能运行Android程序，在主页面二（图5.8）中点击左图的菜单时，会弹出”click 0”等信息弹窗。没有什么用处，可忽略。
+1.14.5 View包
+所有自定义的图形界面，除了MainListItem这个类，这个类放错包了，本应放在util包中。
+该类中所有与自定义图形相关的类都是作者从网上东拼西凑凑来的。只能指认出它们所对应的图标。
+DragLayout、MyRelativeLayout这两个类与主页面的右滑效果有关。
+FunSwitch这个类是程序中所示笑脸开关，如图5.13所示。
+
+
+图5.13 笑脸开关
+SubmitButton是程序中所有按键，如图5.14所示。
+
+图5.13 Android应用中所有Button
+MainListItem类就是主页面中的警告信息ListView后台数据结构类。列表每一项的属性都保存在这个类中。
+1.14.6 web包
+所有与通信相关的类都在这个包中。类与类功能解释见表5.3
+表5.3 web包中类说明
+名称
+作用
+ArpSpoofHttp
+向MEC服务器发启动ARP欺骗请求
+GetArpResultThread
+每隔3秒从MEC服务器请求分析结果
+GetMasterIpHttp
+给远程中心服务器发送定位，并获取MEC IP表
+PackageConsumer
+将流量文件发送至MEC服务器，同时封装了在LAN-MEC模式下用于小型分析的方法consumer2
+PackageProducer
+调用tcpdump，抓包产流量生文件
+PackageQueue
+生产抓包文件与消耗抓包文件的缓冲队列 
+SpoolManager
+管理着PackageConsumer、PackageProducer和PackageQueue这三个类的启动与终止
+UploadFileByHttp
+上传文件的类
+
+
+1.15 运行方式
+1、 需要一台root过的Android手机。
+2、 将./mecds/android/androidshell 目录下的文件移动到adnroid系统的/root .目录下，并给这些文件都赋予可执行权限
+3、 在手机上安装MECDS程序，打开即可运行。

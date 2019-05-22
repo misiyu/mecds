@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg002"
+    tools:context="com.example.misiyu.mecds21.DetailActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="300dp"
+            android:layout_height="400dp"
+            app:cardCornerRadius="6dp"
+            app:cardElevation="3dp"
+            app:cardUseCompatPadding="true"
+            android:layout_centerInParent="true">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp">
+
+                    <View
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_width="8dp"
+                        android:layout_height="match_parent"
+                        android:background="#ca29c8"
+                        />
+                    <TextView
+                        android:id="@+id/report_head"
+                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="50dp"
+                        android:layout_marginLeft="50dp"
+                        android:text="ip"
+                        android:textColor="#FFCC00"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:paddingStart="50dp"
+                    android:paddingLeft="50dp"
+                    android:paddingEnd="30dp"
+                    android:paddingRight="30dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+                    <TextView
+                        android:id="@+id/report_suspect"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="可疑度： 99.9%"
+                        android:textSize="18sp"/>
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:paddingStart="50dp"
+                    android:paddingLeft="50dp"
+                    android:paddingEnd="30dp"
+                    android:paddingRight="30dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <TextView
+                        android:id="@+id/report_attack_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="类型： syn flood"
+                        android:textSize="18sp"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:paddingStart="50dp"
+                    android:paddingLeft="50dp"
+                    android:paddingEnd="30dp"
+                    android:paddingRight="30dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <TextView
+                        android:id="@+id/report_other_message"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="其它信息："
+                        android:textSize="18sp"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:paddingStart="50dp"
+                    android:paddingLeft="50dp"
+                    android:paddingEnd="30dp"
+                    android:paddingRight="30dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <TextView
+                        android:id="@+id/report_recommend_defence"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="防御方式推荐："
+                        android:textSize="18sp"/>
+
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_marginTop="25dp"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp">
+
+                    <view.SubmitButton
+                        android:id="@+id/report_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:sub_btn_tick_color="@color/white"
+                        android:text="点我防御"
+                        android:textSize="15sp"
+                        android:textColor="@color/white"
+                        app:sub_btn_duration="3000" />
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="#9a9a9a"
+                    android:textSize="12sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/choose_defence_method"
+                    />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

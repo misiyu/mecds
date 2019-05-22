@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg003"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/search_card1"
+            android:layout_width="300dp"
+            android:layout_height="400dp"
+            app:cardCornerRadius="6dp"
+            app:cardElevation="3dp"
+            app:cardUseCompatPadding="true"
+            android:layout_centerInParent="true">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <RelativeLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp">
+
+                    <View
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_width="8dp"
+                        android:layout_height="match_parent"
+                        android:background="#d9cf16"
+                        />
+                    <TextView
+                        android:id="@+id/search_head"
+                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="50dp"
+                        android:layout_marginLeft="50dp"
+                        android:text="当前位置"
+                        android:textColor="#2330e4"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        />
+
+                </RelativeLayout>
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="270dp"
+                    android:layout_centerInParent="true">
+                    <TextView
+                        android:id="@+id/search_textview1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        />
+
+                </ScrollView>
+
+                <RelativeLayout
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp">
+
+                    <view.SubmitButton
+                        android:id="@+id/search_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:sub_btn_tick_color="@color/white"
+                        android:text="搜索周边MEC"
+                        android:textSize="15sp"
+                        android:textColor="@color/yellow"
+                        app:sub_btn_duration="1000" />
+                </RelativeLayout>
+            </LinearLayout>
+
+
+        </android.support.v7.widget.CardView>
+
+
+        <RelativeLayout
+            android:layout_width="300dp"
+            android:layout_height="450dp"
+            android:layout_centerInParent="true"
+            android:visibility="invisible"
+            android:id="@+id/search_largeView2"
+            >
+            <android.support.v7.widget.CardView
+                android:id="@+id/search_card3"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                app:cardCornerRadius="6dp"
+                app:cardElevation="3dp"
+                app:cardUseCompatPadding="true"
+                android:layout_marginTop="15dp"
+                android:layout_centerHorizontal="true">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp">
+
+                        <View
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_width="8dp"
+                            android:layout_height="match_parent"
+                            android:background="#d9cf16"
+                            />
+                        <TextView
+                            android:id="@+id/search_head3"
+                            android:layout_centerVertical="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="50dp"
+                            android:layout_marginLeft="50dp"
+                            android:text="当前位置"
+                            android:textColor="#2330e4"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            />
+
+                    </RelativeLayout>
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true">
+                        <TextView
+                            android:id="@+id/search_textview3"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/white" />
+
+                    </ScrollView>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/search_progressView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp"
+                    app:cardCornerRadius="6dp"
+                    app:cardElevation="3dp"
+                    app:cardBackgroundColor="@color/yellow"
+                    android:layout_marginTop="5dp"
+                    app:cardUseCompatPadding="true"
+                    android:background="@color/yellow"
+                    android:layout_below="@+id/search_card3">
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <ProgressBar
+                            android:id="@+id/search_progressbar1"
+                            android:layout_width="90dp"
+                            android:layout_height="match_parent" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/yellow"
+                            android:text="搜索中..."
+                            android:textSize="50sp"
+                            android:layout_toRightOf="@+id/search_progressbar1"/>
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/search_card2"
+                android:layout_width="300dp"
+                android:layout_height="match_parent"
+                app:cardCornerRadius="6dp"
+                app:cardElevation="3dp"
+                app:cardUseCompatPadding="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:visibility="invisible"
+                android:layout_below = "@+id/search_progressView1" >
+                <ListView
+                    android:id="@+id/search_listview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </ListView>
+
+            </android.support.v7.widget.CardView>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>
